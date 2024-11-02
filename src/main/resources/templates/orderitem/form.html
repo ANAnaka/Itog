@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        .form-container {
+            width: 300px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container label, .form-container select, .form-container input, .form-container button {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .form-container button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${orderItem.id != null ? 'Редактировать заказанный товар' : 'Добавить заказанный товар'}"></h1>
+<div class="form-container">
+    <!-- Проверка: если `id` существует, значит выполняется обновление, иначе - добавление -->
+    <form th:action="@{${orderItem.id != null} ? '/orderitems/' + ${orderItem.id} : '/orderitems'}" method="post" th:object="${orderItem}">
+        <input type="hidden" th:field="*{id}"/>
+
+        <label for="order">Заказ:</label>
+        <select th:field="*{order.id}" required>
+            <option th:each="order : ${orders}" th:value="${order.id}"
+                    th:text="${order.client.firstName} + ' ' + ${order.client.lastName}"></option>
+        </select>
+
+        <label for="product">Продукт:</label>
+        <select th:field="*{product.id}" required>
+            <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"></option>
+        </select>
+
+        <label for="quantity">Количество:</label>
+        <input type="number" th:field="*{quantity}" required/>
+
+        <button type="submit">Сохранить</button>
+    </form>
+    <a href="/orderitems">Назад</a>
+</div>
+</body>
+</html>

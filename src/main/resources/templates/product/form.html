@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    .form-container {
+      width: 300px;
+      margin: 50px auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container input,
+    .form-container select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .form-container button:hover {
+      background-color: #0056b3;
+    }
+
+    .form-container a {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: #007bff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<h1 th:text="${product.id != null ? 'Редактировать продукт' : 'Добавить продукт'}"></h1>
+<div class="form-container">
+  <form th:action="@{/products}" method="post" th:object="${product}">
+    <input type="hidden" th:field="*{id}"/>
+
+    <label for="name">Название:</label>
+    <input type="text" th:field="*{name}" required/>
+
+    <label for="description">Описание:</label>
+    <input type="text" th:field="*{description}" required/>
+
+    <label for="price">Цена:</label>
+    <input type="number" step="0.01" th:field="*{price}" required/>
+
+    <label for="photo">URL фотографии:</label>
+    <input type="text" th:field="*{photo}" required/>
+
+    <button type="submit">Сохранить</button>
+  </form>
+  <a href="/products">Назад к продуктам</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Список материалов</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .model-card {
+            border: 1px solid #e0e0e0;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+            background-color: white;
+            padding: 20px;
+            width: 280px;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .model-card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            color: #007bff;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .card-content {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        .card-actions a {
+            display: inline-block;
+            margin: 5px;
+            color: #fff;
+            background-color: #007bff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        /* Стили для навигационного меню */
+        .navbar {
+            background-color: #007bff; /* Цвет фона */
+            padding: 10px 20px; /* Отступы */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень под меню */
+        }
+
+        .container {
+            display: flex; /* Flexbox для выравнивания элементов */
+            justify-content: space-between; /* Распределение ссылок по всей ширине */
+        }
+
+        .nav-link {
+            color: white; /* Цвет текста */
+            text-decoration: none; /* Убираем подчеркивание */
+            margin: 0 15px; /* Отступы между ссылками */
+            padding: 10px; /* Внутренние отступы */
+            transition: background-color 0.3s, transform 0.2s; /* Плавные переходы */
+            border-radius: 4px; /* Скругленные углы */
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Фон при наведении */
+            transform: scale(1.05); /* Увеличение при наведении */
+        }
+
+        .nav-link:active {
+            background-color: rgba(255, 255, 255, 0.3); /* Фон при нажатии */
+        }
+
+        .card-actions a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="navbar :: navbar"></div> <!-- Вставляем меню -->
+
+<h1>Список материалов</h1>
+<a th:href="@{/materials/new}" style="display: block; text-align: center; margin-bottom: 20px; color: #fff; background-color: #007bff; padding: 10px; border-radius: 5px; text-decoration: none;">Добавить новый материал</a>
+<div class="container">
+    <div class="model-card" th:each="material : ${materials}">
+        <div class="card-title" th:text="${material.materialName}">Название материала</div>
+
+        <div class="card-content">
+            <p>Стоимость: <span th:text="${material.materialCost} + ' руб.'">0 руб.</span></p>
+            <p>Поставщик: <span th:text="${material.supplier.companyName}">Не указан</span></p>
+        </div>
+
+        <div class="card-actions">
+            <a th:href="@{/materials/{id}/edit(id=${material.id})}">Редактировать</a>
+            <a th:href="@{/materials/{id}/delete(id=${material.id})}">Удалить</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

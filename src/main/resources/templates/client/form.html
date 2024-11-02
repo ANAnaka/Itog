@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .form-container {
+            width: 300px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-container a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${client.id != null ? 'Редактировать клиента' : 'Добавить клиента'}"></h1>
+<div class="form-container">
+    <form th:action="@{/clients}" method="post" th:object="${client}">
+        <input type="hidden" th:field="*{id}"/>
+        <label for="lastName">Фамилия:</label>
+        <input type="text" th:field="*{lastName}" required/>
+
+        <label for="firstName">Имя:</label>
+        <input type="text" th:field="*{firstName}" required/>
+
+        <label for="email">Email:</label>
+        <input type="email" th:field="*{email}" required/>
+
+        <label for="phoneNumber">Телефон:</label>
+        <input type="text" th:field="*{phoneNumber}" required/>
+
+        <button type="submit">Сохранить</button>
+    </form>
+    <a href="/clients">Назад</a>
+</div>
+</body>
+</html>

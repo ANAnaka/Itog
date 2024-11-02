@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Добавить или редактировать запас</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .form-container {
+            width: 300px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container input,
+        .form-container select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-container a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${stock.id != null ? 'Редактировать запас' : 'Добавить запас'}"></h1>
+<div class="form-container">
+    <form th:action="@{/stock}" method="post" th:object="${stock}">
+        <input type="hidden" th:field="*{id}"/>
+
+        <label for="material">Материал:</label>
+        <select th:field="*{material.id}" required>
+            <option th:each="material : ${materials}"
+                    th:value="${material.id}"
+                    th:text="${material.materialName}"></option>
+        </select>
+
+        <label for="materialQuantity">Количество:</label>
+        <input type="number" th:field="*{materialQuantity}" required/>
+
+        <button type="submit">Сохранить</button>
+    </form>
+    <a href="/stock">Назад</a>
+</div>
+</body>
+</html>
